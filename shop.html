@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Váº·t & CÅ© - Äá»“ Äƒn váº·t & Thanh lÃ½</title>
+<title>Vặt & Cũ - Đồ ăn vặt & Thanh lý</title>
 <style>
   :root{
     --bg:#FFF8EE; --ink:#3A2A1D; --muted:#9C7B57; --accent:#C45A11;
@@ -112,19 +112,19 @@
 
 <header>
   <div class="brand">
-    <div class="logo">âœ¦</div>
+    <div class="logo">✦</div>
     <div>
-      <div class="name">Váº·t & CÅ©</div>
-      <div class="tag">Ä‘á»“ Äƒn váº·t Â· gÃ³c thanh lÃ½</div>
+      <div class="name">Vặt & Cũ</div>
+      <div class="tag">đồ ăn vặt · góc thanh lý</div>
     </div>
   </div>
-  <button id="cartBtn">ðŸ›ï¸ Giá» hÃ ng <span id="cartCount">0</span></button>
+  <button id="cartBtn">🛍️ Giỏ hàng <span id="cartCount">0</span></button>
 </header>
 
 <section class="hero">
-  <h1>Ä‚n váº·t ngon, Ä‘á»“ cÅ© cháº¥t</h1>
-  <p>Mua Ä‘á»“ Äƒn váº·t má»›i má»—i ngÃ y, hoáº·c sÄƒn mÃ³n thanh lÃ½ cÃ²n xá»‹n â€” giÃ¡ luÃ´n cáº­p nháº­t trá»±c tiáº¿p tá»« kho.</p>
-  <div id="sheetStatus">Äang táº£i giÃ¡ tá»« Google Sheet...</div>
+  <h1>Ăn vặt ngon, đồ cũ chất</h1>
+  <p>Mua đồ ăn vặt mới mỗi ngày, hoặc săn món thanh lý còn xịn — giá luôn cập nhật trực tiếp từ kho.</p>
+  <div id="sheetStatus">Đang tải giá từ Google Sheet...</div>
 </section>
 
 <div class="chips" id="chips"></div>
@@ -135,14 +135,14 @@
 <div class="overlay" id="overlay"></div>
 <div class="drawer" id="drawer">
   <div class="drawer-head">
-    <h2>Giá» hÃ ng cá»§a báº¡n</h2>
-    <button class="closeBtn" id="closeDrawer">âœ•</button>
+    <h2>Giỏ hàng của bạn</h2>
+    <button class="closeBtn" id="closeDrawer">✕</button>
   </div>
-  <div id="cartEmpty">Giá» hÃ ng Ä‘ang trá»‘ng.<br>Chá»n vÃ i mÃ³n ngon hoáº·c mÃ³n Ä‘á»“ hay nhÃ©!</div>
+  <div id="cartEmpty">Giỏ hàng đang trống.<br>Chọn vài món ngon hoặc món đồ hay nhé!</div>
   <div id="cartList" style="display:none;"></div>
   <div class="cart-footer">
-    <div class="totalRow"><span>Tá»•ng cá»™ng</span><span id="cartTotal" style="color:var(--accent);">0Ä‘</span></div>
-    <button class="checkoutBtn" id="goCheckout" disabled>Tiáº¿n hÃ nh thanh toÃ¡n</button>
+    <div class="totalRow"><span>Tổng cộng</span><span id="cartTotal" style="color:var(--accent);">0đ</span></div>
+    <button class="checkoutBtn" id="goCheckout" disabled>Tiến hành thanh toán</button>
   </div>
 </div>
 
@@ -151,71 +151,71 @@
   <div class="overlay" id="overlay2"></div>
   <form class="modal-box" id="checkoutForm">
     <div class="drawer-head">
-      <h2>ThÃ´ng tin nháº­n hÃ ng</h2>
-      <button type="button" class="closeBtn" id="closeModal">âœ•</button>
+      <h2>Thông tin nhận hàng</h2>
+      <button type="button" class="closeBtn" id="closeModal">✕</button>
     </div>
 
     <div class="field">
-      <label>ðŸ‘¤ Há» tÃªn</label>
-      <input required id="fName" placeholder="Nguyá»…n VÄƒn A">
+      <label>👤 Họ tên</label>
+      <input required id="fName" placeholder="Nguyễn Văn A">
     </div>
     <div class="field">
-      <label>ðŸ“ž Sá»‘ Ä‘iá»‡n thoáº¡i</label>
+      <label>📞 Số điện thoại</label>
       <input required id="fPhone" placeholder="09xx xxx xxx">
     </div>
     <div class="field">
-      <label>ðŸ“ Äá»‹a chá»‰ nháº­n hÃ ng</label>
-      <textarea required id="fAddress" rows="3" placeholder="Sá»‘ nhÃ , Ä‘Æ°á»ng, phÆ°á»ng/xÃ£, quáº­n/huyá»‡n..."></textarea>
+      <label>📍 Địa chỉ nhận hàng</label>
+      <textarea required id="fAddress" rows="3" placeholder="Số nhà, đường, phường/xã, quận/huyện..."></textarea>
     </div>
     <div class="field">
-      <label>ðŸ“ Ghi chÃº (khÃ´ng báº¯t buá»™c)</label>
-      <input id="fNote" placeholder="Giao giá» hÃ nh chÃ­nh, gá»i trÆ°á»›c khi tá»›i...">
+      <label>📝 Ghi chú (không bắt buộc)</label>
+      <input id="fNote" placeholder="Giao giờ hành chính, gọi trước khi tới...">
     </div>
 
     <div class="field">
-      <label>ðŸšš PhÆ°Æ¡ng thá»©c giao hÃ ng</label>
+      <label>🚚 Phương thức giao hàng</label>
       <label class="ship-option active" data-fee="0">
         <input type="radio" name="shipping" value="standard" checked style="accent-color:#C45A11;">
-        <div class="lbl"><div class="t">Giao thÆ°á»ng</div><div class="d">1â€“2 ngÃ y, Ã¡p dá»¥ng toÃ n quá»‘c</div></div>
-        <div style="font-weight:800;font-size:13px;color:var(--ok);">Miá»…n phÃ­</div>
+        <div class="lbl"><div class="t">Giao thường</div><div class="d">1–2 ngày, áp dụng toàn quốc</div></div>
+        <div style="font-weight:800;font-size:13px;color:var(--ok);">Miễn phí</div>
       </label>
       <label class="ship-option" data-fee="15000">
         <input type="radio" name="shipping" value="express" style="accent-color:#C45A11;">
-        <div class="lbl"><div class="t">Giao trong ngÃ y (ná»™i thÃ nh HCM)</div><div class="d">Nháº­n hÃ ng trong ngÃ y</div></div>
-        <div style="font-weight:800;font-size:13px;color:var(--accent);">+15.000Ä‘</div>
+        <div class="lbl"><div class="t">Giao trong ngày (nội thành HCM)</div><div class="d">Nhận hàng trong ngày</div></div>
+        <div style="font-weight:800;font-size:13px;color:var(--accent);">+15.000đ</div>
       </label>
     </div>
 
     <div class="summary" id="orderSummary"></div>
 
-    <button type="submit" class="submitBtn">Äáº·t hÃ ng & gá»­i qua Zalo</button>
-    <p class="hint">Báº¥m Ä‘áº·t hÃ ng sáº½ má»Ÿ Zalo vá»›i ná»™i dung Ä‘Æ¡n hÃ ng Ä‘Ã£ Ä‘iá»n sáºµn, anh chá»‰ cáº§n báº¥m gá»­i.</p>
+    <button type="submit" class="submitBtn">Đặt hàng & gửi qua Zalo</button>
+    <p class="hint">Bấm đặt hàng sẽ mở Zalo với nội dung đơn hàng đã điền sẵn, anh chỉ cần bấm gửi.</p>
   </form>
 </div>
 
 <div id="toast"></div>
 
 <script>
-// ====================== Cáº¤U HÃŒNH - ANH Sá»¬A á»ž ÄÃ‚Y ======================
-const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRC8Z5QeJKR_OMHWvtgJVuh591SI8e2v6qvGBjDcyM2CXKSuGJZOj_SP5MDxBiP3UcwJEHuEzUuXVXE/pub?gid=31125096&single=true&output=csv"; // thay link CSV publish-to-web tháº­t
-const ZALO_PHONE = "0888820627"; // thay sá»‘ Zalo tháº­t (chá»‰ sá»‘, khÃ´ng dáº¥u cÃ¡ch)
-const ORDER_API_URL = "https://script.google.com/macros/s/AKfycbxEt0-fpP50i4chUCnV8xePo2gmbNMdG5eYpwTPA9gDxASN8SuOChaLRLaOUp9tVuOc/exec"; // thay link Web App Apps Script (xem hÆ°á»›ng dáº«n cuá»‘i file)
-const SHIPPING = { standard: { label: "Giao thÆ°á»ng", fee: 0 }, express: { label: "Giao trong ngÃ y (ná»™i thÃ nh HCM)", fee: 15000 } };
+// ====================== CẤU HÌNH - ANH SỬA Ở ĐÂY ======================
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRC8Z5QeJKR_OMHWvtgJVuh591SI8e2v6qvGBjDcyM2CXKSuGJZOj_SP5MDxBiP3UcwJEHuEzUuXVXE/pub?gid=31125096&single=true&output=csv"; // thay link CSV publish-to-web thật
+const ZALO_PHONE = "0888820627"; // thay số Zalo thật (chỉ số, không dấu cách)
+const ORDER_API_URL = "https://script.google.com/macros/s/AKfycbxEt0-fpP50i4chUCnV8xePo2gmbNMdG5eYpwTPA9gDxASN8SuOChaLRLaOUp9tVuOc/exec"; // thay link Web App Apps Script (xem hướng dẫn cuối file)
+const SHIPPING = { standard: { label: "Giao thường", fee: 0 }, express: { label: "Giao trong ngày (nội thành HCM)", fee: 15000 } };
 // ========================================================================
 
 const MOCK_PRODUCTS = [
-  { id:"sv1", name:"BÃ¡nh trÃ¡ng trá»™n", category:"Äá»“ Äƒn váº·t", price:25000, unit:"/há»™p", desc:"BÃ¡nh trÃ¡ng trá»™n khÃ´ bÃ², Ä‘áº­u phá»™ng, rau rÄƒm â€“ Ä‘Ãºng vá»‹ SÃ i GÃ²n.", img:"https://images.unsplash.com/photo-1626776877269-eb436aa5db3b?w=500", status:"public", promo:"Mua 2 táº·ng 1", promo_status:"public", promo_end:"" },
-  { id:"sv2", name:"Snack khoai tÃ¢y phÃ´ mai", category:"Äá»“ Äƒn váº·t", price:18000, unit:"/gÃ³i", desc:"Khoai tÃ¢y chiÃªn giÃ²n phá»§ phÃ´ mai bÃ©o ngáº­y.", img:"https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=500", status:"public", promo:"", promo_status:"hidden", promo_end:"" },
-  { id:"sv3", name:"TrÃ  sá»¯a trÃ¢n chÃ¢u mini", category:"Äá»“ Äƒn váº·t", price:22000, unit:"/chai", desc:"TrÃ  sá»¯a pha sáºµn, trÃ¢n chÃ¢u dáº»o, ngá»t vá»«a.", img:"https://images.unsplash.com/photo-1558857563-b371033873b8?w=500", status:"public", promo:"Giáº£m 10%", promo_status:"public", promo_end:"" },
-  { id:"tl1", name:"Ão khoÃ¡c denim", category:"Thanh lÃ½", price:150000, unit:"", desc:"Ão khoÃ¡c jean size M, máº·c vÃ i láº§n, cÃ²n ráº¥t má»›i.", img:"https://images.unsplash.com/photo-1602293589930-45821b8b91fe?w=500", status:"public", promo:"", promo_status:"hidden", promo_end:"" },
-  { id:"tl2", name:"GiÃ y sneaker tráº¯ng", category:"Thanh lÃ½", price:280000, unit:"", desc:"GiÃ y size 39, Ä‘i 2 láº§n, full box.", img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500", status:"public", promo:"Giáº£m 20.000Ä‘", promo_status:"public", promo_end:"" },
+  { id:"sv1", name:"Bánh tráng trộn", category:"Đồ ăn vặt", price:25000, unit:"/hộp", desc:"Bánh tráng trộn khô bò, đậu phộng, rau răm – đúng vị Sài Gòn.", img:"https://images.unsplash.com/photo-1626776877269-eb436aa5db3b?w=500", status:"public", promo:"Mua 2 tặng 1", promo_status:"public", promo_end:"" },
+  { id:"sv2", name:"Snack khoai tây phô mai", category:"Đồ ăn vặt", price:18000, unit:"/gói", desc:"Khoai tây chiên giòn phủ phô mai béo ngậy.", img:"https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=500", status:"public", promo:"", promo_status:"hidden", promo_end:"" },
+  { id:"sv3", name:"Trà sữa trân châu mini", category:"Đồ ăn vặt", price:22000, unit:"/chai", desc:"Trà sữa pha sẵn, trân châu dẻo, ngọt vừa.", img:"https://images.unsplash.com/photo-1558857563-b371033873b8?w=500", status:"public", promo:"Giảm 10%", promo_status:"public", promo_end:"" },
+  { id:"tl1", name:"Áo khoác denim", category:"Thanh lý", price:150000, unit:"", desc:"Áo khoác jean size M, mặc vài lần, còn rất mới.", img:"https://images.unsplash.com/photo-1602293589930-45821b8b91fe?w=500", status:"public", promo:"", promo_status:"hidden", promo_end:"" },
+  { id:"tl2", name:"Giày sneaker trắng", category:"Thanh lý", price:280000, unit:"", desc:"Giày size 39, đi 2 lần, full box.", img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500", status:"public", promo:"Giảm 20.000đ", promo_status:"public", promo_end:"" },
 ];
 
 let products = MOCK_PRODUCTS;
 let cart = {}; // id -> qty
-let currentFilter = "Táº¥t cáº£";
+let currentFilter = "Tất cả";
 
-function fmt(n){ return Number(n||0).toLocaleString("vi-VN") + "Ä‘"; }
+function fmt(n){ return Number(n||0).toLocaleString("vi-VN") + "đ"; }
 function isPublic(v){ return String(v||"").toLowerCase().trim() === "public"; }
 
 function parsePromoEndDate(v){
@@ -243,7 +243,7 @@ function formatPromoEnd(v){
   return String(end.getDate()).padStart(2,"0") + "/" + String(end.getMonth()+1).padStart(2,"0");
 }
 
-// Parser CSV chuáº©n: xá»­ lÃ½ Ä‘Ãºng dáº¥u pháº©y/dáº¥u nhÃ¡y kÃ©p trong ná»™i dung (vÃ­ dá»¥ mÃ´ táº£ cÃ³ chá»©a dáº¥u pháº©y)
+// Parser CSV chuẩn: xử lý đúng dấu phẩy/dấu nháy kép trong nội dung (ví dụ mô tả có chứa dấu phẩy)
 function parseCSVLine(line){
   const result = [];
   let cur = "";
@@ -268,7 +268,7 @@ function parseCSVLine(line){
 }
 
 // id,name,category,price,unit,desc,img,status,promo,promo_status,promo_end
-// Tá»± Ä‘á»™ng tÃ¬m Ä‘Ãºng dÃ²ng tiÃªu Ä‘á» (bá» qua cÃ¡c dÃ²ng ghi chÃº/cáº£nh bÃ¡o phÃ­a trÃªn, vÃ­ dá»¥ dÃ²ng "âš ï¸ SHEET NÃ€Y Tá»° Äá»˜NG SINH RA...")
+// Tự động tìm đúng dòng tiêu đề (bỏ qua các dòng ghi chú/cảnh báo phía trên, ví dụ dòng "⚠️ SHEET NÀY TỰ ĐỘNG SINH RA...")
 function parseCSV(text){
   const rawLines = text.split(/\r?\n/).filter(function(l){ return l.trim() !== ""; });
   if(rawLines.length < 2) return null;
@@ -283,7 +283,7 @@ function parseCSV(text){
       break;
     }
   }
-  if(headerIdx === -1) return null; // khÃ´ng tÃ¬m tháº¥y dÃ²ng tiÃªu Ä‘á» há»£p lá»‡
+  if(headerIdx === -1) return null; // không tìm thấy dòng tiêu đề hợp lệ
 
   const rows = rawLines.slice(headerIdx + 1).map(function(line){
     const cells = parseCSVLine(line);
@@ -294,7 +294,7 @@ function parseCSV(text){
 
   return rows.filter(function(r){ return r.id && r.name; }).map(function(r){
     return {
-      id:r.id, name:r.name, category:r.category||"KhÃ¡c",
+      id:r.id, name:r.name, category:r.category||"Khác",
       price:Number(String(r.price).replace(/[^\d]/g,""))||0,
       unit:r.unit||"", desc:r.desc||"", img:r.img||"",
       status:(r.status||"").toLowerCase(), promo:r.promo||"",
@@ -311,13 +311,13 @@ function loadSheet(){
     const parsed = parseCSV(text);
     if(parsed && parsed.length){
       products = parsed;
-      document.getElementById("sheetStatus").innerHTML = "âœ… GiÃ¡ Ä‘ang láº¥y trá»±c tiáº¿p tá»« Google Sheet";
+      document.getElementById("sheetStatus").innerHTML = "✅ Giá đang lấy trực tiếp từ Google Sheet";
     } else {
-      document.getElementById("sheetStatus").innerHTML = "Äang dÃ¹ng dá»¯ liá»‡u máº«u (sheet trá»‘ng hoáº·c sai cá»™t)";
+      document.getElementById("sheetStatus").innerHTML = "Đang dùng dữ liệu mẫu (sheet trống hoặc sai cột)";
     }
     renderChips(); renderGrid();
   }).catch(function(){
-    document.getElementById("sheetStatus").innerHTML = "Äang dÃ¹ng dá»¯ liá»‡u máº«u (chÆ°a káº¿t ná»‘i Ä‘Æ°á»£c Google Sheet â€” kiá»ƒm tra láº¡i link CSV trong code)";
+    document.getElementById("sheetStatus").innerHTML = "Đang dùng dữ liệu mẫu (chưa kết nối được Google Sheet — kiểm tra lại link CSV trong code)";
     renderChips(); renderGrid();
   });
 }
@@ -327,7 +327,7 @@ function publicProducts(){ return products.filter(function(p){ return isPublic(p
 function renderChips(){
   const set = {};
   publicProducts().forEach(function(p){ set[p.category] = true; });
-  const cats = ["Táº¥t cáº£"].concat(Object.keys(set));
+  const cats = ["Tất cả"].concat(Object.keys(set));
   const el = document.getElementById("chips");
   el.innerHTML = "";
   cats.forEach(function(c){
@@ -341,17 +341,17 @@ function renderChips(){
 
 function renderGrid(){
   const all = publicProducts();
-  const list = currentFilter==="Táº¥t cáº£" ? all : all.filter(function(p){ return p.category===currentFilter; });
+  const list = currentFilter==="Tất cả" ? all : all.filter(function(p){ return p.category===currentFilter; });
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
   list.forEach(function(p){
     const card = document.createElement("div");
     card.className = "card";
-    const promoHtml = isPromoActive(p) ? ('<span class="promo-badge">ðŸŽ ' + p.promo + (p.promo_end ? (" Â· Ä‘áº¿n " + formatPromoEnd(p.promo_end)) : "") + '</span>') : "";
+    const promoHtml = isPromoActive(p) ? ('<span class="promo-badge">🎁 ' + p.promo + (p.promo_end ? (" · đến " + formatPromoEnd(p.promo_end)) : "") + '</span>') : "";
     card.innerHTML =
       '<div class="imgwrap">' +
         '<img src="' + p.img + '" alt="' + p.name + '" onerror="this.style.display=\'none\'">' +
-        '<span class="badge">ðŸ·ï¸ ' + p.category + '</span>' +
+        '<span class="badge">🏷️ ' + p.category + '</span>' +
         promoHtml +
       '</div>' +
       '<div class="body">' +
@@ -359,7 +359,7 @@ function renderGrid(){
         '<div class="desc">' + p.desc + '</div>' +
         '<div class="row">' +
           '<span class="price">' + fmt(p.price) + '<small>' + p.unit + '</small></span>' +
-          '<button class="addbtn" data-id="' + p.id + '">âž• ThÃªm</button>' +
+          '<button class="addbtn" data-id="' + p.id + '">➕ Thêm</button>' +
         '</div>' +
       '</div>';
     grid.appendChild(card);
@@ -369,7 +369,7 @@ function renderGrid(){
   });
 }
 
-function addToCart(id){ cart[id] = (cart[id]||0) + 1; renderCart(); showToast("ÄÃ£ thÃªm vÃ o giá» hÃ ng", false); }
+function addToCart(id){ cart[id] = (cart[id]||0) + 1; renderCart(); showToast("Đã thêm vào giỏ hàng", false); }
 function changeQty(id, delta){
   cart[id] = (cart[id]||0) + delta;
   if(cart[id] <= 0) delete cart[id];
@@ -406,10 +406,10 @@ function renderCart(){
         '<div class="iname">' + i.name + '</div>' +
         '<div class="iprice">' + fmt(i.price) + '</div>' +
       '</div>' +
-      '<button class="qtybtn" data-act="minus" data-id="' + i.id + '">âˆ’</button>' +
+      '<button class="qtybtn" data-act="minus" data-id="' + i.id + '">−</button>' +
       '<span style="font-weight:700;min-width:16px;text-align:center;display:inline-block;">' + i.qty + '</span>' +
       '<button class="qtybtn" data-act="plus" data-id="' + i.id + '">+</button>' +
-      '<button class="removeBtn" data-act="remove" data-id="' + i.id + '">âœ•</button>' +
+      '<button class="removeBtn" data-act="remove" data-id="' + i.id + '">✕</button>' +
     '</div>';
   }).join("");
   listEl.querySelectorAll("[data-act]").forEach(function(btn){
@@ -435,16 +435,16 @@ function renderSummary(){
   let html = items.map(function(i){
     return '<div class="line"><span>' + i.name + ' x' + i.qty + '</span><span style="font-weight:700;">' + fmt(i.price*i.qty) + '</span></div>';
   }).join("");
-  html += '<div class="line sub"><span>Táº¡m tÃ­nh</span><span>' + fmt(total) + '</span></div>';
-  html += '<div class="line sub"><span>PhÃ­ váº­n chuyá»ƒn</span><span>' + (fee?fmt(fee):"Miá»…n phÃ­") + '</span></div>';
-  html += '<div class="grand"><span>Tá»•ng thanh toÃ¡n</span><span style="color:var(--accent);">' + fmt(grand) + '</span></div>';
+  html += '<div class="line sub"><span>Tạm tính</span><span>' + fmt(total) + '</span></div>';
+  html += '<div class="line sub"><span>Phí vận chuyển</span><span>' + (fee?fmt(fee):"Miễn phí") + '</span></div>';
+  html += '<div class="grand"><span>Tổng thanh toán</span><span style="color:var(--accent);">' + fmt(grand) + '</span></div>';
   document.getElementById("orderSummary").innerHTML = html;
 }
 
 function showToast(msg, persist){
   const t = document.getElementById("toast");
   t.style.display = "flex";
-  t.innerHTML = msg + ' <button onclick="document.getElementById(\'toast\').style.display=\'none\'" style="border:none;background:transparent;color:#E3B27A;cursor:pointer;margin-left:6px;">âœ•</button>';
+  t.innerHTML = msg + ' <button onclick="document.getElementById(\'toast\').style.display=\'none\'" style="border:none;background:transparent;color:#E3B27A;cursor:pointer;margin-left:6px;">✕</button>';
   if(!persist) setTimeout(function(){ if(t.style.display==="flex") t.style.display="none"; }, 2000);
 }
 
@@ -484,24 +484,24 @@ document.getElementById("checkoutForm").onsubmit = function(e){
   const total = items.reduce(function(s,i){ return s+i.price*i.qty; },0);
   const grand = total + fee;
 
-  const lines = ["ðŸ›’ ÄÆ N HÃ€NG Má»šI"];
+  const lines = ["🛒 ĐƠN HÀNG MỚI"];
   items.forEach(function(i){
     const promoText = isPromoActive(i) ? (" (KM: " + i.promo + ")") : "";
     lines.push("- " + i.name + " x" + i.qty + " = " + fmt(i.price*i.qty) + promoText);
   });
-  lines.push("Táº¡m tÃ­nh: " + fmt(total));
-  lines.push("Váº­n chuyá»ƒn: " + SHIPPING[shipKey].label + (fee ? (" (+" + fmt(fee) + ")") : " (miá»…n phÃ­)"));
-  lines.push("Tá»•ng thanh toÃ¡n: " + fmt(grand));
+  lines.push("Tạm tính: " + fmt(total));
+  lines.push("Vận chuyển: " + SHIPPING[shipKey].label + (fee ? (" (+" + fmt(fee) + ")") : " (miễn phí)"));
+  lines.push("Tổng thanh toán: " + fmt(grand));
   lines.push("");
-  lines.push("KhÃ¡ch: " + name);
-  lines.push("SÄT: " + phone);
-  lines.push("Äá»‹a chá»‰: " + address);
-  if(note) lines.push("Ghi chÃº: " + note);
+  lines.push("Khách: " + name);
+  lines.push("SĐT: " + phone);
+  lines.push("Địa chỉ: " + address);
+  if(note) lines.push("Ghi chú: " + note);
 
   const msg = lines.join("\n");
   const url = "https://zalo.me/" + ZALO_PHONE.replace(/\D/g,"") + "?text=" + encodeURIComponent(msg);
 
-  // Ghi Ä‘Æ¡n hÃ ng vÃ o Google Sheet (khÃ´ng chá» pháº£n há»“i, khÃ´ng cháº·n viá»‡c má»Ÿ Zalo)
+  // Ghi đơn hàng vào Google Sheet (không chờ phản hồi, không chặn việc mở Zalo)
   const itemsText = items.map(function(i){ return i.name + " x" + i.qty; }).join(", ");
   const orderPayload = {
     name: name, phone: phone, address: address, note: note,
@@ -511,14 +511,14 @@ document.getElementById("checkoutForm").onsubmit = function(e){
   if(ORDER_API_URL && ORDER_API_URL.indexOf("PASTE_YOUR_DEPLOYMENT_ID") === -1){
     fetch(ORDER_API_URL, {
       method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" }, // text/plain Ä‘á»ƒ trÃ¡nh lá»—i CORS preflight vá»›i Apps Script
+      headers: { "Content-Type": "text/plain;charset=utf-8" }, // text/plain để tránh lỗi CORS preflight với Apps Script
       body: JSON.stringify(orderPayload)
-    }).catch(function(){ /* lá»—i máº¡ng cÅ©ng khÃ´ng cháº·n viá»‡c má»Ÿ Zalo */ });
+    }).catch(function(){ /* lỗi mạng cũng không chặn việc mở Zalo */ });
   }
 
   window.open(url, "_blank");
 
-  showToast("ÄÃ£ má»Ÿ Zalo vá»›i Ä‘Æ¡n hÃ ng " + fmt(grand) + ". Anh nhá»› báº¥m gá»­i tin nháº¯n nhÃ©!", true);
+  showToast("Đã mở Zalo với đơn hàng " + fmt(grand) + ". Anh nhớ bấm gửi tin nhắn nhé!", true);
   cart = {}; renderCart();
   modal.style.display = "none";
   this.reset();
@@ -527,7 +527,7 @@ document.getElementById("checkoutForm").onsubmit = function(e){
 // init
 renderChips(); renderGrid(); renderCart();
 loadSheet();
-setInterval(loadSheet, 5*60*1000); // tá»± lÃ m má»›i giÃ¡ má»—i 5 phÃºt
+setInterval(loadSheet, 5*60*1000); // tự làm mới giá mỗi 5 phút
 </script>
 </body>
 </html>
