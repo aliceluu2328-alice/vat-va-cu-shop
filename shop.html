@@ -106,6 +106,22 @@
   #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--accent-dark);
     color:#fff;padding:12px 20px;border-radius:12px;display:none;align-items:center;gap:10px;
     z-index:60;font-size:13.5px;max-width:90vw;}
+
+  /* Nút nổi gọi điện / Zalo */
+  #fabWrap{position:fixed;bottom:24px;right:20px;z-index:45;display:flex;flex-direction:column;gap:12px;align-items:flex-end;}
+  .fab{display:flex;align-items:center;gap:8px;border:none;border-radius:999px;cursor:pointer;
+    text-decoration:none;font-weight:700;font-size:13.5px;box-shadow:0 6px 16px rgba(0,0,0,.18);
+    transition:transform .15s ease;}
+  .fab:active{transform:scale(.95);}
+  .fab-circle{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;}
+  .fab-call .fab-circle{background:var(--ok);}
+  .fab-zalo .fab-circle{background:#0068FF;}
+  .fab-label{display:none;background:#fff;color:var(--ink);padding:8px 14px;border-radius:999px;
+    border:1px solid var(--card);}
+  @media (min-width:560px){
+    .fab{padding-right:0;}
+    .fab .fab-label{display:inline-block;}
+  }
 </style>
 </head>
 <body>
@@ -194,6 +210,26 @@
 </div>
 
 <div id="toast"></div>
+
+<div id="fabWrap">
+  <a class="fab fab-zalo" id="zaloFab" href="#" target="_blank" rel="noopener">
+    <span class="fab-label">Chat Zalo</span>
+    <span class="fab-circle">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3C7.03 3 3 6.58 3 11c0 2.49 1.28 4.71 3.31 6.22-.1.86-.45 2.07-1.31 3.28a.5.5 0 0 0 .55.78c1.77-.55 3.1-1.42 3.9-2.04A11.4 11.4 0 0 0 12 19c4.97 0 9-3.58 9-8s-4.03-8-9-8Z" fill="#fff"/>
+        <text x="12" y="13.2" font-family="Arial, sans-serif" font-size="6.2" font-weight="800" fill="#0068FF" text-anchor="middle">Zalo</text>
+      </svg>
+    </span>
+  </a>
+  <a class="fab fab-call" id="callFab" href="#">
+    <span class="fab-label">Gọi ngay</span>
+    <span class="fab-circle">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.5 2.4.8 3.6.9.6 0 1 .5 1 1V20c0 .6-.4 1-1 1C10.4 21 3 13.6 3 4c0-.6.4-1 1-1h3.1c.6 0 1 .4 1 1 .1 1.3.4 2.5.9 3.6.2.3.1.7-.2 1l-2.2 2.2Z" fill="#fff"/>
+      </svg>
+    </span>
+  </a>
+</div>
 
 <script>
 // ====================== CẤU HÌNH - ANH SỬA Ở ĐÂY ======================
@@ -305,19 +341,19 @@ function parseCSV(text){
 
 function loadSheet(){
   fetch(SHEET_CSV_URL).then(function(res){
-    if(!res.ok) throw new Error("not ok");
+    if(!res.ok) throw new Error("HTTP " + res.status);
     return res.text();
   }).then(function(text){
     const parsed = parseCSV(text);
     if(parsed && parsed.length){
       products = parsed;
-      document.getElementById("sheetStatus").innerHTML = "✅ Giá đang lấy trực tiếp từ Google Sheet";
+      document.getElementById("sheetStatus").innerHTML = "✅ Giá đang lấy trực tiếp từ Google Sheet (" + parsed.length + " sản phẩm)";
     } else {
-      document.getElementById("sheetStatus").innerHTML = "Đang dùng dữ liệu mẫu (sheet trống hoặc sai cột)";
+      document.getElementById("sheetStatus").innerHTML = "⚠️ Đang dùng dữ liệu mẫu — đã tải được CSV nhưng KHÔNG tìm thấy dòng tiêu đề có cột 'id' và 'name'. Kiểm tra lại sheet 'Web' có đúng 2 cột này không.";
     }
     renderChips(); renderGrid();
-  }).catch(function(){
-    document.getElementById("sheetStatus").innerHTML = "Đang dùng dữ liệu mẫu (chưa kết nối được Google Sheet — kiểm tra lại link CSV trong code)";
+  }).catch(function(err){
+    document.getElementById("sheetStatus").innerHTML = "⚠️ Đang dùng dữ liệu mẫu — lỗi tải Google Sheet: " + err.message + ". Kiểm tra lại SHEET_CSV_URL và quyền chia sẻ của file.";
     renderChips(); renderGrid();
   });
 }
@@ -528,6 +564,10 @@ document.getElementById("checkoutForm").onsubmit = function(e){
 renderChips(); renderGrid(); renderCart();
 loadSheet();
 setInterval(loadSheet, 5*60*1000); // tự làm mới giá mỗi 5 phút
+
+// Gắn link cho nút nổi Zalo & Gọi điện
+document.getElementById("zaloFab").href = "https://zalo.me/" + ZALO_PHONE.replace(/\D/g,"");
+document.getElementById("callFab").href = "tel:" + ZALO_PHONE.replace(/\D/g,"");
 </script>
 </body>
 </html>
