@@ -140,7 +140,6 @@
 <section class="hero">
   <h1>Ăn vặt ngon, đồ cũ chất</h1>
   <p>Mua đồ ăn vặt mới mỗi ngày, hoặc săn món thanh lý còn xịn — giá luôn cập nhật trực tiếp từ kho.</p>
-  <div id="sheetStatus">Đang tải giá từ Google Sheet...</div>
 </section>
 
 <div class="chips" id="chips"></div>
@@ -202,6 +201,14 @@
       </label>
     </div>
 
+    <div class="field">
+      <label>💰 Phương thức thanh toán</label>
+      <label class="ship-option active" data-pay="cod">
+        <input type="radio" name="payment" value="cod" checked style="accent-color:#C45A11;">
+        <div class="lbl"><div class="t">Thanh toán khi nhận hàng (COD)</div><div class="d">Trả tiền mặt cho shipper khi nhận hàng</div></div>
+      </label>
+    </div>
+
     <div class="summary" id="orderSummary"></div>
 
     <button type="submit" class="submitBtn">Đặt hàng & gửi qua Zalo</button>
@@ -252,6 +259,11 @@ let cart = {}; // id -> qty
 let currentFilter = "Tất cả";
 
 function fmt(n){ return Number(n||0).toLocaleString("vi-VN") + "đ"; }
+function formatUnit(u){
+  if(!u) return "";
+  const clean = String(u).trim().replace(/^\/+/, ""); // bỏ dấu / nếu sheet đã có sẵn, tránh bị // lặp
+  return clean ? (" /" + clean) : "";
+}
 function isPublic(v){ return String(v||"").toLowerCase().trim() === "public"; }
 
 function parsePromoEndDate(v){
@@ -347,13 +359,13 @@ function loadSheet(){
     const parsed = parseCSV(text);
     if(parsed && parsed.length){
       products = parsed;
-      document.getElementById("sheetStatus").innerHTML = "✅ Giá đang lấy trực tiếp từ Google Sheet (" + parsed.length + " sản phẩm)";
+      console.log("✅ Giá đang lấy trực tiếp từ Google Sheet (" + parsed.length + " sản phẩm)");
     } else {
-      document.getElementById("sheetStatus").innerHTML = "⚠️ Đang dùng dữ liệu mẫu — đã tải được CSV nhưng KHÔNG tìm thấy dòng tiêu đề có cột 'id' và 'name'. Kiểm tra lại sheet 'Web' có đúng 2 cột này không.";
+      console.warn("⚠️ Đang dùng dữ liệu mẫu — đã tải được CSV nhưng KHÔNG tìm thấy dòng tiêu đề có cột 'id' và 'name'.");
     }
     renderChips(); renderGrid();
   }).catch(function(err){
-    document.getElementById("sheetStatus").innerHTML = "⚠️ Đang dùng dữ liệu mẫu — lỗi tải Google Sheet: " + err.message + ". Kiểm tra lại SHEET_CSV_URL và quyền chia sẻ của file.";
+    console.warn("⚠️ Đang dùng dữ liệu mẫu — lỗi tải Google Sheet: " + err.message);
     renderChips(); renderGrid();
   });
 }
@@ -394,7 +406,7 @@ function renderGrid(){
         '<div class="name">' + p.name + '</div>' +
         '<div class="desc">' + p.desc + '</div>' +
         '<div class="row">' +
-          '<span class="price">' + fmt(p.price) + '<small>' + p.unit + '</small></span>' +
+          '<span class="price">' + fmt(p.price) + '<small>' + formatUnit(p.unit) + '</small></span>' +
           '<button class="addbtn" data-id="' + p.id + '">➕ Thêm</button>' +
         '</div>' +
       '</div>';
@@ -527,6 +539,7 @@ document.getElementById("checkoutForm").onsubmit = function(e){
   });
   lines.push("Tạm tính: " + fmt(total));
   lines.push("Vận chuyển: " + SHIPPING[shipKey].label + (fee ? (" (+" + fmt(fee) + ")") : " (miễn phí)"));
+  lines.push("Thanh toán: Thanh toán khi nhận hàng (COD)");
   lines.push("Tổng thanh toán: " + fmt(grand));
   lines.push("");
   lines.push("Khách: " + name);
@@ -535,7 +548,24 @@ document.getElementById("checkoutForm").onsubmit = function(e){
   if(note) lines.push("Ghi chú: " + note);
 
   const msg = lines.join("\n");
-  const url = "https://zalo.me/" + ZALO_PHONE.replace(/\D/g,"") + "?text=" + encodeURIComponent(msg);
+  const url = "https://zalo.me/" + ZALO_PHONE.replace(/\D/g,"");
+
+  // Zalo KHÔNG hỗ trợ tự điền nội dung tin nhắn qua link (khác WhatsApp) —
+  // nên copy sẵn nội dung đơn hàng vào clipboard, khách chỉ cần dán (Ctrl+V) vào khung chat.
+  function copyOrderText(){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      return navigator.clipboard.writeText(msg);
+    }
+    // fallback cho trình duyệt cũ / không hỗ trợ Clipboard API
+    const ta = document.createElement("textarea");
+    ta.value = msg;
+    ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try { document.execCommand("copy"); } catch(e){}
+    document.body.removeChild(ta);
+    return Promise.resolve();
+  }
 
   // Ghi đơn hàng vào Google Sheet (không chờ phản hồi, không chặn việc mở Zalo)
   const itemsText = items.map(function(i){ return i.name + " x" + i.qty; }).join(", ");
@@ -552,9 +582,10 @@ document.getElementById("checkoutForm").onsubmit = function(e){
     }).catch(function(){ /* lỗi mạng cũng không chặn việc mở Zalo */ });
   }
 
-  window.open(url, "_blank");
-
-  showToast("Đã mở Zalo với đơn hàng " + fmt(grand) + ". Anh nhớ bấm gửi tin nhắn nhé!", true);
+  copyOrderText().then(function(){
+    window.open(url, "_blank");
+    showToast("📋 Đã copy nội dung đơn hàng. Trong khung chat Zalo vừa mở, anh dán (Ctrl+V hoặc nhấn giữ → Dán) rồi bấm Gửi nhé!", true);
+  });
   cart = {}; renderCart();
   modal.style.display = "none";
   this.reset();
