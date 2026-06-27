@@ -89,11 +89,13 @@
   .field input, .field textarea{width:100%;border:1px solid var(--line);border-radius:10px;
     padding:9px 12px;font-size:13.5px;font-family:inherit;background:#fff;color:var(--ink);outline:none;}
   .ship-option{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:#fff;
-    border-radius:12px;padding:10px 12px;cursor:pointer;margin-bottom:8px;}
+    border-radius:12px;padding:10px 12px;cursor:pointer;margin-bottom:8px;width:100%;box-sizing:border-box;}
   .ship-option.active{border:2px solid var(--accent);background:#FFF1E2;}
-  .ship-option .lbl{flex:1;}
+  .ship-option input[type="radio"]{flex-shrink:0;}
+  .ship-option .lbl{flex:1 1 auto;min-width:0;overflow-wrap:break-word;word-break:break-word;}
   .ship-option .lbl .t{font-weight:700;font-size:13.5px;}
   .ship-option .lbl .d{font-size:11.5px;color:var(--muted);}
+  .ship-option > div:last-child:not(.lbl){flex-shrink:0;white-space:nowrap;}
   .summary{background:#fff;border:1px solid var(--card);border-radius:12px;padding:12px;margin:6px 0 16px;}
   .summary .line{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;}
   .summary .sub{font-size:12.5px;color:var(--muted);}
@@ -244,8 +246,7 @@ const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRC8Z5QeJ
 const ZALO_PHONE = "0888820627"; // thay số Zalo thật (chỉ số, không dấu cách)
 const ORDER_API_URL = "https://script.google.com/macros/s/AKfycbxEt0-fpP50i4chUCnV8xePo2gmbNMdG5eYpwTPA9gDxASN8SuOChaLRLaOUp9tVuOc/exec"; // thay link Web App Apps Script (xem hướng dẫn cuối file)
 const SHIPPING = { standard: { label: "Giao thường", fee: 0 }, express: { label: "Giao trong ngày (nội thành HCM)", fee: 15000 } };
-// ========================================================================
-
+// ======================
 const MOCK_PRODUCTS = [
   { id:"sv1", name:"Bánh tráng trộn", category:"Đồ ăn vặt", price:25000, unit:"/hộp", desc:"Bánh tráng trộn khô bò, đậu phộng, rau răm – đúng vị Sài Gòn.", img:"https://images.unsplash.com/photo-1626776877269-eb436aa5db3b?w=500", status:"public", promo:"Mua 2 tặng 1", promo_status:"public", promo_end:"" },
   { id:"sv2", name:"Snack khoai tây phô mai", category:"Đồ ăn vặt", price:18000, unit:"/gói", desc:"Khoai tây chiên giòn phủ phô mai béo ngậy.", img:"https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=500", status:"public", promo:"", promo_status:"hidden", promo_end:"" },
